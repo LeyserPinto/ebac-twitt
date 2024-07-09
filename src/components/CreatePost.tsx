@@ -24,7 +24,7 @@ const CreatePost = (props:ICreatePost) => {
         try {
             let created_at = new Date();
             dispatch(createPost({ title, content, created_at}))
-            navigate(0)
+            window.location.reload()
         } catch (error: any) {
             setLocalErro('Há ocorrudio um erro ' + error)
         }
