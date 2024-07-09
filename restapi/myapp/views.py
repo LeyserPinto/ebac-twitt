@@ -10,8 +10,6 @@ from .serializers import RegisterSerializer, LoginSerializer, PostSerializer
 from rest_framework.permissions import IsAuthenticated
 from .models import Post
 
-
-
 @api_view(['POST'])
 def register_view(request):
     print(request.data)
