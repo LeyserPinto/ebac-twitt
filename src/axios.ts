@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://leyserp.pythonanywhere.com/', // Update this to your Django backend URL
+    baseURL: 'https://leyserp.pythonanywhere.com/', // Update this to your Django backend URL
 });
 
 
