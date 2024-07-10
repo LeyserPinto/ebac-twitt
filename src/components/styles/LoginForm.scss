@@ -133,6 +133,16 @@
         cursor: pointer;
         text-decoration: none;
       }
+
+      .err-lists {
+        width: 100%;
+        height: 2rem;
+        overflow: auto;
+        text-align: center;
+        li.err {
+          font-size: 1.2rem;
+        }
+      }
     }
     
     

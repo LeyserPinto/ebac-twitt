@@ -13,14 +13,14 @@ const RegisterForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<String[]>([]);
     const [loading, setLoading] = useState(false);
 
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
+        setError([]);
         try {
             const response = await axios.post('/api/register/', {
                 username,
@@ -32,8 +32,19 @@ const RegisterForm: React.FC = () => {
             dispatch(loginUser(response.data));
             navigate('/');
         } catch (error: any) {
-            console.error(error);
-            setError(error.response?.data?.error || 'Registration failed');
+            let errMsgArray: String[] = [];
+            const errInputs = Object.keys(error.response.data);
+
+            if(errInputs != undefined && errInputs.constructor == Array && errInputs.length > 0) {
+                errInputs.forEach(errInput => {
+                    errMsgArray.push(`${errInput} input: ${error.response.data[errInput]}`)
+                })
+            }
+            if(errMsgArray != undefined) {
+                setError(errMsgArray);
+            } else {
+                setError(['Registration failed']);
+            }
         } finally {
             setLoading(false);
         }
@@ -80,8 +91,11 @@ const RegisterForm: React.FC = () => {
             </div>
             <div className='form-actions'>
                 {loading && <p className='message'>Loading...</p>}
-                {error && <p className='message'>{error}</p>}
                 <button type="submit" className="button-confirm">Register</button>
+                
+                {error && <ul className='err-lists'>{error.map((err:String, index:number) => (
+                    <li className='err' key={index}>{err}</li>
+                ))}</ul>}
             </div>
         </form>
     );
